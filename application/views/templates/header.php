@@ -1,7 +1,9 @@
 <html>
 <head>
     <title><?php echo $title ?> - CodeIgniter 2 Tutorial</title>
+<?php
+	$this->carabiner->display('js');
+?>
 </head>
 <body>
     <h1>CodeIgniter 2 Tutorial</h1>
-    
