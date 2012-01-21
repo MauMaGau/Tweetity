@@ -1,9 +1,9 @@
 <html>
 <head>
-    <title><?php echo $title ?> - CodeIgniter 2 Tutorial</title>
+    <title><?php echo $title ?></title>
 <?php
 	$this->carabiner->display('js');
 ?>
 </head>
 <body>
-    <h1>CodeIgniter 2 Tutorial</h1>
+    <h1>Tweetmuch</h1>

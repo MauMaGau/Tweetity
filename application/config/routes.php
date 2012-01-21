@@ -66,7 +66,10 @@
 
 $route['tweetmuch/ajax'] = 'tweetmuch/ajax';
 $route['tweetmuch/ajax/(:any)'] = 'tweetmuch/ajax/$1';
-$route['tweetmuch'] = 'tweetmuch';
+
+$route['tweetmuch'] = 'tweetmuch/index';
+$route['tweetmuch/(:any)'] = 'tweetmuch/index/$1';
+
 $route['news/create'] = 'news/create';
 $route['news/(:any)'] = 'news/view/$1';
 $route['news'] = 'news';

@@ -1,4 +1,16 @@
 <p>Welcome to Tweetity</p>
+
+<?php 
+    echo validation_errors();
+    echo form_open('tweetmuch');
+        
+?>
+
+    <label for='handle'>Handle</label>
+    <input type='text' name='handle'><br>
+    
+    <input type='submit' value='Search'>
+    </form>
 <?php
 	if(isset($error)&&!empty($error)){
 ?>
@@ -14,10 +26,8 @@
 		</ul>
 <?php
 	}else{
-
-		//print_r($result);
-
 ?>
+<p id='handle'><?php if(isset($handle)){echo $handle;} ?></p>
 <!--Div that will hold the pie chart-->
     <div id="chart_div"></div>
 
