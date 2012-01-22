@@ -30,6 +30,7 @@ class Tweetity {
     private $feed_url = 'http://otter.topsy.com/';
     private $query = 'searchhistogram.json?q=from:davidtownsenduk';
 
+    public $count = 10;
     private $timeBoundary;
     private $timeCount = array();
     public $tweets = array();
@@ -144,7 +145,7 @@ class Tweetity {
             $this->feed_url = $this->feed_bin['twitter'];
             $this->query = 'search.json?q=';
             $this->query .= 'from%3A'.$this->handle;
-            //$this->query .= '%20since%3A'.date('Y-m-d',strtotime("-$hours hours"));
+            $this->query .= '%20since%3A'.date('Y-m-d',strtotime("-$hours hours"));
             
             $this->get();
 
@@ -178,7 +179,39 @@ class Tweetity {
             return $this->timeCount;
         }
 
-        
+        public function getHistogramCount($count=10){
+
+            $count = $this->count;
+            $this->feed_url = $this->feed_bin['twitter'];
+            $this->query = 'search.json?q=';
+            $this->query .= 'from:'.$this->handle;
+            if($count<=100){
+                $this->query .= '&rpp='.$count;
+            }else $this->query .= '&rpp=100';
+
+            $this->get();
+
+            array_walk($this->result->results,array($this,'twitFormatResultsDensity'));
+            
+            $results = $this->result->results;
+
+            //Is there a next page url?
+            $i=0;
+            while(count($this->result->results)==$this->result->results_per_page && isset($this->result->next_page) && count($results)<$count&&$i<5){
+                $this->query = 'search.json'.$this->result->next_page;
+
+                $this->get();
+
+                array_walk($this->result->results,array($this,'twitFormatResultsDensity'));
+                
+                $results = array_merge($results,$this->result->results);
+                $i++;
+            }
+            
+            $this->timeCount = $this->twitFillTimes($this->timeCount);
+
+            return $this->timeCount;
+        }
         
         
         private function formatDate(&$tweet){
@@ -210,7 +243,48 @@ class Tweetity {
         }
         
 
+        private function twitFormatResultsDensity(&$tweet,$key){
+            //print_r($tweet);
+            //$createdAt = date('Y-m-d H:00',strtotime($tweet->created_at.' -1 hour')); // Why -1 hour? Answers on a postcard plx.
+            $createdAt = strtotime(date('Y-m-d H:00',strtotime($tweet->created_at.' -1 hour'))); //
+            
+            $this->timeCount[] = $createdAt;
+        }
         
+        private function twitFillTimes($timeCount){
+
+            $arr_size = count($timeCount);
+            //$earliest_time = strtotime($timeCount[$arr_size-1]);
+            
+            $earliest_time = strtotime(date("Y-m-d H:00:00",$timeCount[$arr_size-1]));
+            
+            //$earliest_time = date('Y-m-d H:00',$earliest_time);
+            
+
+            $timeCounts = array_count_values($timeCount);
+            
+            $now = time();
+            $x = $earliest_time;
+            $i=0;
+            while($x < $now){
+                
+                
+                if(isset($timeCounts[$x])){
+                    $times[$i] = $timeCounts[$x];
+                }else $times[$i] = 0;
+                
+                
+                //$x = date('Y-m-d H:00',strtotime($x.' +1 hour'));
+                //$x = strtotime($x.' +1 hour');
+                $x = $x + 3600;
+                $i++;
+            }
+
+            //foreach($times as $k=>$v){
+            //    $times[$k] = count(array_keys($timeCount,$k));
+            //}
+            return $times;
+        }
         
 // OLD METHODS
         
