@@ -31,7 +31,7 @@ function getHistogram(dataType){
     var handle = $('#handle').attr('data-handle');
     var count = $('#count').attr('data-count');
     $.ajax({
-          url: '/sandbox/Tweetity/index.php/tweetdensity/ajax/histogram/'+handle+'/'+dataType+'/'+count,
+          url: '/sandbox/Tweetity/tweetdensity/ajax/histogram/'+handle+'/'+dataType+'/'+count,
           async: false,
           success: function( response ) {
               ajaxOutput = $.parseJSON(response);
@@ -44,7 +44,7 @@ function getHistogram(dataType){
 function getTweets(){
     var handle = $('#handle').attr('data-handle');
     $.ajax({
-          url: '/sandbox/Tweetity/index.php/tweetdensity/ajax/tweets/'+handle,
+          url: '/sandbox/Tweetity/tweetdensity/ajax/tweets/'+handle,
           async: false,
           success: function( response ) {
               ajaxOutput = $.parseJSON(response);
