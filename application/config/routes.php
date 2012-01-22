@@ -66,8 +66,8 @@
 
 
 
-$route['tweetdensity/ajax/histogram/(:any)'] = 'tweetdensity/ajaxHistogram/$1';
-$route['tweetdensity/ajax/tweets/(:any)'] = 'tweetdensity/ajaxTweets/$1';
+//$route['tweetdensity/ajax/histogram/(:any)'] = 'tweetdensity/ajaxHistogram/$1';
+//$route['tweetdensity/ajax/tweets/(:any)'] = 'tweetdensity/ajaxTweets/$1';
 $route['tweetdensity'] = 'tweetdensity/index';
 
 
