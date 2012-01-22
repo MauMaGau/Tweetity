@@ -78,7 +78,7 @@ $route['tweetmuch/ajax/tweets/(:any)'] = 'tweetmuch/ajaxTweets/$1';
 $route['tweetmuch'] = 'tweetmuch/index';
 $route['tweetmuch/(:any)'] = 'tweetmuch/index/$1';
 
-$route['default_controller'] = "tweetdensity?handle=interviewstreet&count=2&type=html";
+$route['default_controller'] = "tweetdensity";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
