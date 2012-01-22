@@ -1,7 +1,3 @@
-
-
-
-
 // Load the Visualization API and the piechart package.
 google.load('visualization', '1.0', {'packages':['corechart']});
 
@@ -13,13 +9,15 @@ google.setOnLoadCallback(drawChart);
 // draws it.
 function drawChart() {
 
-	chartData = getHistogram();
+    var dataType = getDataType();
+	var chartData = getHistogram(dataType);
+    
 
 		// Create the data table.
 		var data = new google.visualization.DataTable(chartData);
 
 		// Set chart options
-		var options = {'title':'Tweets per month',
+		var options = {'title':dataType+' tweets',
 						'height':'800'
 		               };
 
@@ -28,10 +26,11 @@ function drawChart() {
 		chart.draw(data, options);
 }
 
-function getHistogram(){
-    handle = $('#handle').html();
+function getHistogram(dataType){
+    console.log(dataType);
+    var handle = $('#handle').attr('data-handle');
 	$.ajax({
-		  url: '/sandbox/Tweetity/index.php/tweetmuch/ajax/'+handle,
+		  url: '/sandbox/Tweetity/index.php/tweetmuch/ajax/histogram/'+handle+'/'+dataType,
 		  async: false,
 		  success: function( response ) {
 		  	ajaxOutput = $.parseJSON(response);
@@ -40,3 +39,33 @@ function getHistogram(){
 	  console.log(ajaxOutput);
 	  return ajaxOutput;
 }
+
+function getTweets(){
+    var handle = $('#handle').attr('data-handle');
+    $.ajax({
+          url: '/sandbox/Tweetity/index.php/tweetmuch/ajax/tweets/'+handle,
+          async: false,
+          success: function( response ) {
+              ajaxOutput = $.parseJSON(response);
+          }
+      });
+      //console.log(ajaxOutput);
+      return ajaxOutput;
+}
+
+function getDataType(){
+    return $('input[name=dataType]').val();
+}
+
+$(function(){
+    var tweets = getTweets();
+    for(var i=0;i<tweets.length;i++){
+        //console.log(tweets[i]);
+        $('#tweets').append('<li>['+tweets[i].created_at+'] '+tweets[i].text+'</li>');
+    }
+    
+    $('.tweetType').click(function(){
+        $('#dataType').attr('value',$(this).attr('id'));
+        drawChart();
+    })
+})

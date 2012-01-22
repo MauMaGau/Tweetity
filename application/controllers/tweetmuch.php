@@ -51,14 +51,27 @@
 			 * @access public
 			 * @return JSON
 		 	 */
-		public function ajax($handle='bbcbreaking'){
+		public function ajaxHistogram($handle='davidtownsenduk',$period='hourly'){
             $this->tweetity->handle = $handle;
-			$chartData = $this->tweetity->getHistogramHourly();
-            $this->gchart->makeChart($chartData);
+            $period = ucfirst($period);
+            $method = "getHistogram$period";
+			$chartData = $this->tweetity->$method();
+            
+            $this->gchart->makeChart($chartData,$this->tweetity->tweets);
             $data['result'] = $this->gchart->chartTable;
 
 			$this->load->view('json/simple',$data);
 		}
 		
+        public function ajaxTweets($handle='davidtownsenduk'){
+            $this->tweetity->handle = $handle;
+            $this->tweetity->page = 1;
+            $this->tweetity->offset = 0;
+            $this->tweetity->perpage = 10;
+            
+            $data['result'] = $this->tweetity->getTweets();
+            
+            $this->load->view('json/simple',$data);
+        }
 	}
 ?>
