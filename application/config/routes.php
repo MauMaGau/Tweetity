@@ -66,8 +66,8 @@
 
 
 
-$route['tweetdensity/ajax/histogram/(:any)'] = 'tweetdensity/ajaxHistogram/$1';
-$route['tweetdensity/ajax/tweets/(:any)'] = 'tweetdensity/ajaxTweets/$1';
+$route['ajax/histogram/(:any)'] = 'tweetdensity/ajaxHistogram/$1';
+$route['ajax/tweets/(:any)'] = 'tweetdensity/ajaxTweets/$1';
 $route['tweetdensity'] = 'tweetdensity/index';
 
 
@@ -78,7 +78,7 @@ $route['tweetmuch/ajax/tweets/(:any)'] = 'tweetmuch/ajaxTweets/$1';
 $route['tweetmuch'] = 'tweetmuch/index';
 $route['tweetmuch/(:any)'] = 'tweetmuch/index/$1';
 
-$route['default_controller'] = "tweetdensity";
+$route['default_controller'] = "tweetdensity?handle=interviewstreet&count=2&type=html";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
