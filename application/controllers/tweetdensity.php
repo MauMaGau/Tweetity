@@ -50,7 +50,8 @@
             
             $this->load->library('xml',array('tweetdensity')); 
             
-            $result = $this->tweetity->getHistogramCount($data['count']);
+            $this->tweetity->count = $data['count'];
+            $result = $this->tweetity->getHistogramCount();
 
             $i=0;
             foreach($result as $count){
@@ -62,7 +63,8 @@
         }
         
         private function json($data){
-            $result = $this->tweetity->getHistogramCount($data['count']);
+            $this->tweetity->count = $data['count'];
+            $result = $this->tweetity->getHistogramCount();
 
             $i=0;
             foreach($result as $count){
