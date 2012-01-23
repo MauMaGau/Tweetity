@@ -3,15 +3,15 @@
     echo date('jS ga');
     echo date('H:i:s');
 ?>
-<?php 
+<?php
     echo validation_errors();
     echo form_open('tweetmuch');
-        
+
 ?>
 
     <label for='handle'>Handle</label>
     <input type='text' name='handle'><br>
-    
+
     <input type='submit' value='Search'>
     </form>
 <?php
@@ -37,8 +37,8 @@
 </section>
 <section>
     <h2>Tweets over duration</h2>
-    <input type='button' class='tweetType' id='hourly' value='Last Day'><br>
-    <input type='button' class='tweetType' id='monthly' value='Last Year'>
+    <!--<input type='button' class='tweetType' id='hourly' value='Last Day'><br>
+    <input type='button' class='tweetType' id='monthly' value='Last Year'>-->
     <input type='hidden' name='dataType' id='dataType' value='hourly'>
     <div id="chart_div"></div>
 </section>
